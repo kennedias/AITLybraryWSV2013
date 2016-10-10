@@ -42,38 +42,7 @@ namespace SystemFramework
             return dataTable;
         }
 
-        public static DataTable ThrowExceptionTable(Exception ex, string faultSource)
-        {
-            DataTable FormatedExceptionDataTable = new DataTable();
-
-            FormatedExceptionDataTable.TableName = Constants.wsExTableName;
-            FormatedExceptionDataTable.Columns.Add(Constants.wsExTableColumnFaultSourceDescription);
-            FormatedExceptionDataTable.Columns.Add(Constants.wsExTableColumnFaultSourceCode);
-            FormatedExceptionDataTable.Columns.Add(Constants.wsExTableColumnExType);
-            FormatedExceptionDataTable.Columns.Add(Constants.wsExTableColumnExMessage);
-
-            DataRow row = FormatedExceptionDataTable.NewRow();
-
-            row[Constants.wsExTableColumnFaultSourceDescription] = faultSource;
-            row[Constants.wsExTableColumnExType] = ex.GetType().ToString();
-            row[Constants.wsExTableColumnExMessage] = ex.Message;
-
-
-            //Identify the location of the FaultCode
-            switch (faultSource)
-            {
-                case  Constants.faultBusinessError:
-                    row[Constants.wsExTableColumnFaultSourceCode] = AppEnum.FaultSourceWS.BusinessError;
-                    break;
-                case Constants.faultAplicationError:
-                    row[Constants.wsExTableColumnFaultSourceCode] = AppEnum.FaultSourceWS.AplicationError;
-                    break;
-            }
-
-            FormatedExceptionDataTable.Rows.Add(row);
-
-            return FormatedExceptionDataTable;
-        }
+        
 
         /*
         public static DataTable intToDataTable(int operationResult)

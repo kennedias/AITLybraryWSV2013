@@ -24,40 +24,77 @@ namespace AITLybraryWS
     {
 
         [WebMethod]
-        public void myThrow()
+        public DataTable UserList()
         {
+            try
+            {
+                UserLogic userLogic = new UserLogic();
+                return userLogic.GetAllUser().ToDataTable();
 
-            // Build the detail element of the SOAP fault.
-            System.Xml.XmlDocument doc = new System.Xml.XmlDocument();
-            System.Xml.XmlNode node = doc.CreateNode(XmlNodeType.Element, SoapException.DetailElementName.Name, SoapException.DetailElementName.Namespace);
+            }
+            catch (BusinessLogicException ex)
+            {
+                HandleSoapException handleSoapExceptionnew = new HandleSoapException();
+                SoapException soapException = new SoapException();
+                soapException = handleSoapExceptionnew.CreateSoapException(Constants.faultUri,
+                                                                           "UserList",
+                                                                           ex.Message,
+                                                                           AppEnum.FaultSourceWS.BusinessError.ToString(),
+                                                                           Constants.faultBusinessError,
+                                                                           AppEnum.FaultSourceWS.BusinessError);
+                throw soapException;
+            }
+            catch (Exception ex)
+            {
+                HandleSoapException handleSoapExceptionnew = new HandleSoapException();
+                SoapException soapException = new SoapException();
 
-
-            // Build specific details for the SoapException. 
-            // Add first child of detail XML element.
-            System.Xml.XmlNode details = doc.CreateNode(XmlNodeType.Element, "mySpecialInfo1", "http://tempuri.org/");
-            System.Xml.XmlNode detailsChild = doc.CreateNode(XmlNodeType.Element, "childOfSpecialInfo", "http://tempuri.org/");
-            details.AppendChild(detailsChild);
-
-
-            // Add second child of detail XML element with an attribute.
-            System.Xml.XmlNode details2 = doc.CreateNode(XmlNodeType.Element, "mySpecialInfo2", "http://tempuri.org/");
-            XmlAttribute attr = doc.CreateAttribute("t", "attrName", "http://tempuri.org/");
-            attr.Value = "attrValue";
-            details2.Attributes.Append(attr);
-
-            // Append the two child elements to the detail node.
-            node.AppendChild(details);
-            node.AppendChild(details2);
-
-
-            //Throw the exception.    
-            SoapException se = new SoapException("Fault occurred", SoapException.ClientFaultCode, Context.Request.Url.AbsoluteUri, node);
-
-            throw se;
-            return;
+                soapException = handleSoapExceptionnew.CreateSoapException(Constants.faultUri,
+                                                                            "UserList",
+                                                                            ex.Message,
+                                                                            AppEnum.FaultSourceWS.AplicationError.ToString(),
+                                                                            Constants.faultAplicationError,
+                                                                            AppEnum.FaultSourceWS.AplicationError);
+                throw soapException;
+            }
         }
 
 
+        [WebMethod]
+        public DataTable UserListByName(String userName)
+        {
+            try
+            {
+                UserLogic userLogic = new UserLogic();
+                return userLogic.GetUsersByName(userName).ToDataTable();
+
+            }
+            catch (BusinessLogicException ex)
+            {
+                HandleSoapException handleSoapExceptionnew = new HandleSoapException();
+                SoapException soapException = new SoapException();
+                soapException = handleSoapExceptionnew.CreateSoapException(Constants.faultUri,
+                                                                           "UserListByName",
+                                                                           ex.Message,
+                                                                           AppEnum.FaultSourceWS.BusinessError.ToString(),
+                                                                           Constants.faultBusinessError,
+                                                                           AppEnum.FaultSourceWS.BusinessError);
+                throw soapException;
+            }
+            catch (Exception ex)
+            {
+                HandleSoapException handleSoapExceptionnew = new HandleSoapException();
+                SoapException soapException = new SoapException();
+
+                soapException = handleSoapExceptionnew.CreateSoapException(Constants.faultUri,
+                                                                            "UserListByName",
+                                                                            ex.Message,
+                                                                            AppEnum.FaultSourceWS.AplicationError.ToString(),
+                                                                            Constants.faultAplicationError,
+                                                                            AppEnum.FaultSourceWS.AplicationError);
+                throw soapException;
+            }
+        }
 
         [WebMethod]
         public DataTable UserLogin(string username, string password)
@@ -65,54 +102,75 @@ namespace AITLybraryWS
             try
             {
                 UserLogic userLogic = new UserLogic();
-
                 return userLogic.PerformLogin(username, password).ToDataTable();
             }
             catch (BusinessLogicException ex)
             {
-             //   return AppUtil.ThrowExceptionTable(ex, Constants.faultBusinessError);
-
                 HandleSoapException handleSoapExceptionnew = new HandleSoapException();
                 SoapException soapException = new SoapException();
-
-                soapException = handleSoapExceptionnew.CreateSoapException("http://tempuri.org/CategoriesService",
-                                                                                         "PerformLogin",
-                                                                                         ex.Message,
-                                                                                         AppEnum.FaultSourceWS.AplicationError.ToString(),
-                                                                                         "Business",
-                                                                                         AppEnum.FaultSourceWS.BusinessError);
+                soapException = handleSoapExceptionnew.CreateSoapException(Constants.faultUri,
+                                                                           "UserLogin",
+                                                                           ex.Message,
+                                                                           AppEnum.FaultSourceWS.BusinessError.ToString(),
+                                                                           Constants.faultBusinessError,
+                                                                           AppEnum.FaultSourceWS.BusinessError);
                 throw soapException;
-
-                throw;
             }
             catch (Exception ex)
             {
-              //  return AppUtil.ThrowExceptionTable(ex, Constants.faultAplicationError);
                 HandleSoapException handleSoapExceptionnew = new HandleSoapException();
                 SoapException soapException = new SoapException();
 
-                soapException = handleSoapExceptionnew.CreateSoapException("http://tempuri.org/CategoriesService",
-                                                                                         "PerformLogin",
-                                                                                         ex.Message,
-                                                                                         AppEnum.FaultSourceWS.AplicationError.ToString(),
-                                                                                         "Business",
-                                                                                         AppEnum.FaultSourceWS.AplicationError);
+                soapException = handleSoapExceptionnew.CreateSoapException(Constants.faultUri,
+                                                                            "UserLogin",
+                                                                            ex.Message,
+                                                                            AppEnum.FaultSourceWS.AplicationError.ToString(),
+                                                                            Constants.faultAplicationError,
+                                                                            AppEnum.FaultSourceWS.AplicationError);
                 throw soapException;
-                throw;
             }
         }
 
+        
         [WebMethod]
-        public DataTable UserList()
+        public int updateUser(string userName, string password, string userLevelDescription, int userID)
         {
-            UserLogic userLogic = new UserLogic();
+            try
+            {
+                UserLogic userLogic = new UserLogic();
+                return userLogic.updateUser(userName, password, userLevelDescription, userID);
+             }
+            catch (BusinessLogicException ex)
+            {
+                HandleSoapException handleSoapExceptionnew = new HandleSoapException();
+                SoapException soapException = new SoapException();
+                soapException = handleSoapExceptionnew.CreateSoapException(Constants.faultUri,
+                                                                           "updateUser",
+                                                                           ex.Message,
+                                                                           AppEnum.FaultSourceWS.BusinessError.ToString(),
+                                                                           Constants.faultBusinessError,
+                                                                           AppEnum.FaultSourceWS.BusinessError);
+                throw soapException;
+            }
+            catch (Exception ex)
+            {
+                HandleSoapException handleSoapExceptionnew = new HandleSoapException();
+                SoapException soapException = new SoapException();
 
-            return userLogic.GetAllUser().ToDataTable();
+                soapException = handleSoapExceptionnew.CreateSoapException(Constants.faultUri,
+                                                                            "updateUser",
+                                                                            ex.Message,
+                                                                            AppEnum.FaultSourceWS.AplicationError.ToString(),
+                                                                            Constants.faultAplicationError,
+                                                                            AppEnum.FaultSourceWS.AplicationError);
+                throw soapException;
+            }
         }
 
-        /*
+
+
         [WebMethod]
-        public DataTable InsertUser(string userName, string userLevelDescription)
+        public int InsertUser(string userName, string userLevelDescription)
         {
             try
             {
@@ -122,41 +180,168 @@ namespace AITLybraryWS
             catch (BusinessLogicException ex)
             {
                 HandleSoapException handleSoapExceptionnew = new HandleSoapException();
-
-                    CreateSoapException(string uri,
-                                        string webServiceNamespace,
-                                        string errorMessage,
-                                        string errorNumber,
-                                        string errorSource,
-                                        AppEnum.FaultSourceWS faultSource)
-                
                 SoapException soapException = new SoapException();
-
-                soapException = handleSoapExceptionnew.CreateSoapException("http://tempuri.org/CategoriesService",
-                                                                                         "PerformLogin",
-                                                                                         ex.Message,
-                                                                                         AppEnum.FaultSourceWS.BusinessError.ToString(),
-                                                                                         "Business",
-                                                                                         AppEnum.FaultSourceWS.BusinessError);
-                throw SoapException;
-                // return AppUtil.ThrowExceptionTable(ex);
+                soapException = handleSoapExceptionnew.CreateSoapException(Constants.faultUri,
+                                                                           "InsertUser",
+                                                                           ex.Message,
+                                                                           AppEnum.FaultSourceWS.BusinessError.ToString(),
+                                                                           Constants.faultBusinessError,
+                                                                           AppEnum.FaultSourceWS.BusinessError);
+                throw soapException;
             }
             catch (Exception ex)
             {
                 HandleSoapException handleSoapExceptionnew = new HandleSoapException();
                 SoapException soapException = new SoapException();
 
-                soapException = handleSoapExceptionnew.CreateSoapException("http://tempuri.org/CategoriesService",
-                                                                                         "PerformLogin",
-                                                                                         ex.Message,
-                                                                                         AppEnum.FaultSourceWS.AplicationError.ToString(),
-                                                                                         "Business",
-                                                                                         AppEnum.FaultSourceWS.AplicationError);
+                soapException = handleSoapExceptionnew.CreateSoapException(Constants.faultUri,
+                                                                            "InsertUser",
+                                                                            ex.Message,
+                                                                            AppEnum.FaultSourceWS.AplicationError.ToString(),
+                                                                            Constants.faultAplicationError,
+                                                                            AppEnum.FaultSourceWS.AplicationError);
                 throw soapException;
-                //return AppUtil.ThrowExceptionTable(ex);
             }
         }
-*/
- 
-    } 
+
+        [WebMethod]
+        public int updateUserWithoutPassword(string userName, string userLevelDescription, int userID)
+        {
+            try
+            {
+                UserLogic userLogic = new UserLogic();
+                return userLogic.updateUserWithoutPassword(userName, userLevelDescription, userID);
+            }
+            catch (BusinessLogicException ex)
+            {
+                HandleSoapException handleSoapExceptionnew = new HandleSoapException();
+                SoapException soapException = new SoapException();
+                soapException = handleSoapExceptionnew.CreateSoapException(Constants.faultUri,
+                                                                           "updateUserWithoutPassword",
+                                                                           ex.Message,
+                                                                           AppEnum.FaultSourceWS.BusinessError.ToString(),
+                                                                           Constants.faultBusinessError,
+                                                                           AppEnum.FaultSourceWS.BusinessError);
+                throw soapException;
+            }
+            catch (Exception ex)
+            {
+                HandleSoapException handleSoapExceptionnew = new HandleSoapException();
+                SoapException soapException = new SoapException();
+
+                soapException = handleSoapExceptionnew.CreateSoapException(Constants.faultUri,
+                                                                            "updateUserWithoutPassword",
+                                                                            ex.Message,
+                                                                            AppEnum.FaultSourceWS.AplicationError.ToString(),
+                                                                            Constants.faultAplicationError,
+                                                                            AppEnum.FaultSourceWS.AplicationError);
+                throw soapException;
+            }
+        }
+
+        [WebMethod]
+        public int deleteUser(int userID)
+        {
+            try
+            {
+                UserLogic userLogic = new UserLogic();
+                return userLogic.deleteUser(userID);
+            }
+            catch (BusinessLogicException ex)
+            {
+                HandleSoapException handleSoapExceptionnew = new HandleSoapException();
+                SoapException soapException = new SoapException();
+                soapException = handleSoapExceptionnew.CreateSoapException(Constants.faultUri,
+                                                                           "deleteUser",
+                                                                           ex.Message,
+                                                                           AppEnum.FaultSourceWS.BusinessError.ToString(),
+                                                                           Constants.faultBusinessError,
+                                                                           AppEnum.FaultSourceWS.BusinessError);
+                throw soapException;
+            }
+            catch (Exception ex)
+            {
+                HandleSoapException handleSoapExceptionnew = new HandleSoapException();
+                SoapException soapException = new SoapException();
+
+                soapException = handleSoapExceptionnew.CreateSoapException(Constants.faultUri,
+                                                                            "deleteUser",
+                                                                            ex.Message,
+                                                                            AppEnum.FaultSourceWS.AplicationError.ToString(),
+                                                                            Constants.faultAplicationError,
+                                                                            AppEnum.FaultSourceWS.AplicationError);
+                throw soapException;
+            }
+        }
+
+        [WebMethod]
+        public String getUserLevelDescriptionByLevelCode(int userLevelCode)
+        {
+            try
+            {
+                UserLogic userLogic = new UserLogic();
+                return userLogic.getUserLevelDescriptionByLevelCode(userLevelCode);
+            }
+            catch (BusinessLogicException ex)
+            {
+                HandleSoapException handleSoapExceptionnew = new HandleSoapException();
+                SoapException soapException = new SoapException();
+                soapException = handleSoapExceptionnew.CreateSoapException(Constants.faultUri,
+                                                                           "getUserLevelDescriptionByLevelCode",
+                                                                           ex.Message,
+                                                                           AppEnum.FaultSourceWS.BusinessError.ToString(),
+                                                                           Constants.faultBusinessError,
+                                                                           AppEnum.FaultSourceWS.BusinessError);
+                throw soapException;
+            }
+            catch (Exception ex)
+            {
+                HandleSoapException handleSoapExceptionnew = new HandleSoapException();
+                SoapException soapException = new SoapException();
+
+                soapException = handleSoapExceptionnew.CreateSoapException(Constants.faultUri,
+                                                                            "getUserLevelDescriptionByLevelCode",
+                                                                            ex.Message,
+                                                                            AppEnum.FaultSourceWS.AplicationError.ToString(),
+                                                                            Constants.faultAplicationError,
+                                                                            AppEnum.FaultSourceWS.AplicationError);
+                throw soapException;
+            }
+        }
+
+        [WebMethod]
+        public int getUserLevelCodeByLevelDescription(string userLevelDescription)
+        {
+            try
+            {
+                UserLogic userLogic = new UserLogic();
+                return userLogic.getUserLevelCodeByLevelDescription(userLevelDescription);
+            }
+            catch (BusinessLogicException ex)
+            {
+                HandleSoapException handleSoapExceptionnew = new HandleSoapException();
+                SoapException soapException = new SoapException();
+                soapException = handleSoapExceptionnew.CreateSoapException(Constants.faultUri,
+                                                                           "getUserLevelDescriptionByLevelCode",
+                                                                           ex.Message,
+                                                                           AppEnum.FaultSourceWS.BusinessError.ToString(),
+                                                                           Constants.faultBusinessError,
+                                                                           AppEnum.FaultSourceWS.BusinessError);
+                throw soapException;
+            }
+            catch (Exception ex)
+            {
+                HandleSoapException handleSoapExceptionnew = new HandleSoapException();
+                SoapException soapException = new SoapException();
+
+                soapException = handleSoapExceptionnew.CreateSoapException(Constants.faultUri,
+                                                                            "getUserLevelDescriptionByLevelCode",
+                                                                            ex.Message,
+                                                                            AppEnum.FaultSourceWS.AplicationError.ToString(),
+                                                                            Constants.faultAplicationError,
+                                                                            AppEnum.FaultSourceWS.AplicationError);
+                throw soapException;
+            }
+        }
+    }
 }

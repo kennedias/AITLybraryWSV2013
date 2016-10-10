@@ -62,6 +62,9 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="BookWS.asmx" />
+    <Content Include="LoginValidationWS.asmx" />
+    <Content Include="MasterDomainWS.asmx" />
     <Content Include="UserWS.asmx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -72,7 +75,19 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BookWS.asmx.cs">
+      <DependentUpon>BookWS.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="HandleSoapException.cs" />
+    <Compile Include="LoginValidationWS.asmx.cs">
+      <DependentUpon>LoginValidationWS.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MasterDomainWS.asmx.cs">
+      <DependentUpon>MasterDomainWS.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserWS.asmx.cs">
       <DependentUpon>UserWS.asmx</DependentUpon>

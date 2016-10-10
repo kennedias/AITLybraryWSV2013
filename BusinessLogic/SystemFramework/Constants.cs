@@ -70,14 +70,7 @@ namespace SystemFramework
         #region FaultSourceWS
         public const string faultAplicationError = "AplicationError";
         public const string faultBusinessError = "BusinessError";
-        #endregion
-
-        #region FormatedExceptionDataTable
-        public const string wsExTableName = "Exception";
-        public const string wsExTableColumnFaultSourceDescription = "FaultSourceDescription";
-        public const string wsExTableColumnFaultSourceCode = "FaultSourceCode";
-        public const string wsExTableColumnExType = "ExType";
-        public const string wsExTableColumnExMessage = "ExMessage";
+        public const string faultUri = "http://tempuri.org/CategoriesService";
         #endregion
 
    }
