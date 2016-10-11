@@ -54,6 +54,7 @@ namespace SystemFramework
         public const string msgInvalidUserCode = "Invalid user level code for the code. ";
         public const string msgExceptionRegisterInUse = "Register is in use and can not be deleted.";
         public const string msgExceptionISBNInUse = "This ISBN is already in use.";
+        public const string msgInvalidPublishYear = "Invalid publish year.";
         #endregion
 
         #region DataFiels

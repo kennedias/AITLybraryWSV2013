@@ -23,31 +23,12 @@ namespace AITLybraryWS
     {
 
         [WebMethod]
-        public DataTable UserList()
+        public DataTable GetAllUser()
         {
             try
             {
                 UserLogic userLogic = new UserLogic();
                 return userLogic.GetAllUser().ToDataTable();
-
-        /*        List<UserResponse> userResponseList = new List<UserResponse>();
-
-                List<TabUserModel> tmpListUser = userLogic.GetAllUser();
-                    
-
-				 if (tmpListUser.Count > 0)
-				 {
-					 for (int i = 0; i < tmpListUser.Count; i++) {
-						 UserResponse userResponse = new UserResponse();
-					     userResponse.ID = tmpListUser[i].ID;
-					     userResponse.Name = tmpListUser[i].Name;
-					     userResponse.LevelCode = tmpListUser[i].LevelCode;
-					     userResponse.LevelDescription = tmpListUser[i].LevelDescription;
-                         userResponseList.Add(userResponse);
-					 }
-				 }
-
-                 return userResponseList;*/
             }
             catch (BusinessLogicException ex)
             {
@@ -78,7 +59,7 @@ namespace AITLybraryWS
 
 
         [WebMethod]
-        public DataTable UserListByName(String userName)
+        public DataTable GetUsersByName(String userName)
         {
             try
             {
@@ -91,7 +72,7 @@ namespace AITLybraryWS
                 HandleSoapException handleSoapExceptionnew = new HandleSoapException();
                 SoapException soapException = new SoapException();
                 soapException = handleSoapExceptionnew.CreateSoapException(Constants.faultUri,
-                                                                           "UserListByName",
+                                                                           "GetUsersByName",
                                                                            ex.Message,
                                                                            AppEnum.FaultSourceWS.BusinessError.ToString(),
                                                                            Constants.faultBusinessError,
@@ -104,7 +85,7 @@ namespace AITLybraryWS
                 SoapException soapException = new SoapException();
 
                 soapException = handleSoapExceptionnew.CreateSoapException(Constants.faultUri,
-                                                                            "UserListByName",
+                                                                            "GetUsersByName",
                                                                             ex.Message,
                                                                             AppEnum.FaultSourceWS.AplicationError.ToString(),
                                                                             Constants.faultAplicationError,

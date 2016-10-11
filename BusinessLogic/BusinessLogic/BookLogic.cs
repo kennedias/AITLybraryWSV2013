@@ -698,6 +698,10 @@ namespace BusinessLogic
         {
             try
             {
+                if (!this.yearOfBookIsValid(publishYear))
+                {
+                    throw new BusinessLogicException(Constants.msgInvalidPublishYear);
+                }
                 _bookDAO = new BookDAO();
                 return _bookDAO.InsertBook(isbn, bookName, author, category, language, publishYear, pages, publisher);
             }
@@ -736,6 +740,10 @@ namespace BusinessLogic
         {
             try
             {
+                if (!this.yearOfBookIsValid(publishYear))
+                {
+                    throw new BusinessLogicException(Constants.msgInvalidPublishYear);
+                }
                 _bookDAO = new BookDAO();
                 return _bookDAO.UpdateBook(updatedIsbn, bookName, author, category, language, publishYear, pages, publisher, isbn);
             }
@@ -753,6 +761,18 @@ namespace BusinessLogic
                 Console.WriteLine(ex.GetBaseException().ToString());
                 throw;
             }
+        }
+
+        #endregion
+
+        #region bookFieldRulesValidate
+
+        private Boolean yearOfBookIsValid(int year)
+        {
+            if ((year < 1500) || (year > DateTime.Today.Year))
+                return false;
+            else 
+                return true;
         }
 
         #endregion
