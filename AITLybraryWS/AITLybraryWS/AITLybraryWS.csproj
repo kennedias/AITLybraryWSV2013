@@ -63,8 +63,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="BookWS.asmx" />
+    <Content Include="CategoryWS.asmx" />
+    <Content Include="LanguageWS.asmx" />
     <Content Include="LoginValidationWS.asmx" />
-    <Content Include="MasterDomainWS.asmx" />
+    <Content Include="AuthorWS.asmx" />
     <Content Include="UserWS.asmx" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -79,20 +81,30 @@
       <DependentUpon>BookWS.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="CategoryWS.asmx.cs">
+      <DependentUpon>CategoryWS.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="HandleSoapException.cs" />
+    <Compile Include="LanguageWS.asmx.cs">
+      <DependentUpon>LanguageWS.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="LoginValidationWS.asmx.cs">
       <DependentUpon>LoginValidationWS.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="MasterDomainWS.asmx.cs">
-      <DependentUpon>MasterDomainWS.asmx</DependentUpon>
+    <Compile Include="AuthorWS.asmx.cs">
+      <DependentUpon>AuthorWS.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserResponse.cs" />
     <Compile Include="UserWS.asmx.cs">
       <DependentUpon>UserWS.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="WsUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\BusinessLogic\BusinessLogic\BusinessLogic.csproj">

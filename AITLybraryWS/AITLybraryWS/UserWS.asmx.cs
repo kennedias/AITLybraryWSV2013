@@ -8,7 +8,6 @@ using System.Data;
 using SystemFramework;
 using System.Web.Services.Protocols;
 
-using System.Xml;
 
 namespace AITLybraryWS
 {
@@ -31,6 +30,24 @@ namespace AITLybraryWS
                 UserLogic userLogic = new UserLogic();
                 return userLogic.GetAllUser().ToDataTable();
 
+        /*        List<UserResponse> userResponseList = new List<UserResponse>();
+
+                List<TabUserModel> tmpListUser = userLogic.GetAllUser();
+                    
+
+				 if (tmpListUser.Count > 0)
+				 {
+					 for (int i = 0; i < tmpListUser.Count; i++) {
+						 UserResponse userResponse = new UserResponse();
+					     userResponse.ID = tmpListUser[i].ID;
+					     userResponse.Name = tmpListUser[i].Name;
+					     userResponse.LevelCode = tmpListUser[i].LevelCode;
+					     userResponse.LevelDescription = tmpListUser[i].LevelDescription;
+                         userResponseList.Add(userResponse);
+					 }
+				 }
+
+                 return userResponseList;*/
             }
             catch (BusinessLogicException ex)
             {

@@ -18,7 +18,7 @@ namespace AITLybraryWS
     [System.ComponentModel.ToolboxItem(false)]
     // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
     // [System.Web.Script.Services.ScriptService]
-    public class BookWS : System.Web.Services.WebService
+    public class BookWS : WebService
     {
 
         [WebMethod]
@@ -604,41 +604,7 @@ namespace AITLybraryWS
             }
         }
 
-        [WebMethod]
-        public DataTable GetAllBooksReservedViewByUserId(int userId)
-        {
-            try
-            {
-                BookLogic bookLogic = new BookLogic();
-                return bookLogic.GetAllBooksReservedViewByUserId(userId).ToDataTable();
-
-            }
-            catch (BusinessLogicException ex)
-            {
-                HandleSoapException handleSoapExceptionnew = new HandleSoapException();
-                SoapException soapException = new SoapException();
-                soapException = handleSoapExceptionnew.CreateSoapException(Constants.faultUri,
-                                                                           "GetAllBooksReservedViewByUserId",
-                                                                           ex.Message,
-                                                                           AppEnum.FaultSourceWS.BusinessError.ToString(),
-                                                                           Constants.faultBusinessError,
-                                                                           AppEnum.FaultSourceWS.BusinessError);
-                throw soapException;
-            }
-            catch (Exception ex)
-            {
-                HandleSoapException handleSoapExceptionnew = new HandleSoapException();
-                SoapException soapException = new SoapException();
-
-                soapException = handleSoapExceptionnew.CreateSoapException(Constants.faultUri,
-                                                                            "GetAllBooksReservedViewByUserId",
-                                                                            ex.Message,
-                                                                            AppEnum.FaultSourceWS.AplicationError.ToString(),
-                                                                            Constants.faultAplicationError,
-                                                                            AppEnum.FaultSourceWS.AplicationError);
-                throw soapException;
-            }
-        }
+        
 
         [WebMethod]
         public DataTable GetAllBooksBorrowedWithUserView()
